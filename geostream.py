@@ -2,6 +2,7 @@ import re
 import streamlit as st
 import requests
 import geofun as gf
+import plotly
 key = 'C1124EC93984B81A7614D75B3FF2C3C4'
 
 format = """\n
