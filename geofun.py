@@ -48,6 +48,7 @@ def get_geolist(trace_text):
 
 
 def draw_map(locations:pd.DataFrame):
+    locations.dropna(subset=['latitude','longitude'],inplace=True)
 # 创建地图图表对象
     fig = go.Figure()
 
@@ -94,38 +95,40 @@ def draw_map(locations:pd.DataFrame):
             # hoverinfo='text'  # 设置悬停时显示的信息为文字
         ))
     for i in range(len(locations)-1):
-        fig.add_trace(go.Scattermapbox(
-            lat=[locations['latitude'][i+1]],  # 点的纬度
-            lon=[locations['longitude'][i+1]],  # 点的经度
-            mode='markers',  # 模式设置为 markers
-            marker=dict(
-                size=15,  # 点的大小
-                color='green'  # 点的颜色
-            ),
-            # text=['Point 1', 'Point 2', 'Point 3'],  # 点旁边的文字
-            # hoverinfo='text'  # 设置悬停时显示的信息为文字
-        ))
-        fig.add_trace(go.Scattermapbox(
-        lat = [locations['latitude'][i], locations['latitude'][i+1]], 
-        lon = [locations['longitude'][i], locations['longitude'][i+1]],
-        mode = 'lines',
-        line = dict(width = 1.5, color = 'blue'),
-        ))
-        A = np.array([locations['longitude'][i], locations['latitude'][i]])
-        B = np.array([locations['longitude'][i+1], locations['latitude'][i+1]])
-        v = B-A
-        w = v/np.linalg.norm(v)     
-        u  =np.array([-v[1], v[0]])  #u orthogonal on  w
-                
-        P = B-l*w
-        S = P - widh*u
-        T = P + widh*u
-        fig.add_trace(go.Scattermapbox(lon = [S[0], T[0], B[0], S[0]], 
-                                    lat =[S[1], T[1], B[1], S[1]], 
-                                    mode='lines', 
-                                    fill='toself', 
-                                    fillcolor='yellow', 
-                                    line_color='yellow'))
+        try:
+            fig.add_trace(go.Scattermapbox(
+                lat=[locations['latitude'][i+1]],  # 点的纬度
+                lon=[locations['longitude'][i+1]],  # 点的经度
+                mode='markers',  # 模式设置为 markers
+                marker=dict(
+                    size=15,  # 点的大小
+                    color='green'  # 点的颜色
+                ),
+                # text=['Point 1', 'Point 2', 'Point 3'],  # 点旁边的文字
+                # hoverinfo='text'  # 设置悬停时显示的信息为文字
+            ))
+            fig.add_trace(go.Scattermapbox(
+            lat = [locations['latitude'][i], locations['latitude'][i+1]], 
+            lon = [locations['longitude'][i], locations['longitude'][i+1]],
+            mode = 'lines',
+            line = dict(width = 1.5, color = 'blue'),
+            ))
+            A = np.array([locations['longitude'][i], locations['latitude'][i]])
+            B = np.array([locations['longitude'][i+1], locations['latitude'][i+1]])
+            v = B-A
+            w = v/np.linalg.norm(v)     
+            u  =np.array([-v[1], v[0]])  #u orthogonal on  w
+                    
+            P = B-l*w
+            S = P - widh*u
+            T = P + widh*u
+            fig.add_trace(go.Scattermapbox(lon = [S[0], T[0], B[0], S[0]], 
+                                        lat =[S[1], T[1], B[1], S[1]], 
+                                        mode='lines', 
+                                        fill='toself', 
+                                        fillcolor='yellow', 
+                                        line_color='yellow'))
+        except:pass
     # fig.show()
     return fig
 # {'ip': '223.120.10.86',
