@@ -45,11 +45,13 @@ def main():
             st.markdown("valid IP")
             ip_data,private_ip = gf.get_geolist(text_input)
             st.text(ip_data[['ip','region_name','city_name','time_zone','latitude','longitude']])
+            st.markdown("dramatic_map")
+            st.write(gf.draw_map_dra(ip_data))
             st.write(gf.draw_map(ip_data))
             st.markdown("Private IP")
             st.text(private_ip)
             st.markdown('[Learn More about Private IP](https://blog.csdn.net/linuxjackaroo/article/details/2180793)')
-
+            
             # if len(ip_list)==0:
             #     print('error')
             # print(ip_list)
