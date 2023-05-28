@@ -52,7 +52,7 @@ def get_geolist(trace_text):
     except:return False
 
 
-def draw_map_dra(locations:pd.DataFrame):
+def draw_map(locations:pd.DataFrame):
     
    
 # 创建地图图表对象
@@ -151,7 +151,7 @@ def draw_map_dra(locations:pd.DataFrame):
 #  'is_proxy': False}
 # def draw_map(geo_data):
 
-def draw_map(locations:pd.DataFrame):
+def draw_map_dra(locations:pd.DataFrame):
 # 创建地图图表对象
     fig = go.Figure()
 
